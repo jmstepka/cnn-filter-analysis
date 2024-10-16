@@ -1,9 +1,12 @@
 import argparse
 import os
 import uuid
-from src.external.create_pfm import create_pfm_matrices
-from src.external.calculate_ic import calculate_ic
-from src.external.ic_analysis import ic_plots
+from src.create_pfm import create_pfm_matrices
+from src.calculate_ic import calculate_ic
+from src.ic_analysis import ic_plots
+from src.calculate_kl import calculate_kl_distance
+from src.kl_analysis import kl_analysis
+
 
 def generate_run_id():
     """Generate a new unique run_id."""
@@ -92,11 +95,11 @@ def main():
         calculate_ic(input_dir, output_dir)
     elif args.command == "ic_analysis":
         input_dir, output_dir = get_directories(args.run_id, args.input_dir, args.output_dir)
-        ic_analysis(input_dir, args.threshold)
+        ic_plots(input_dir, args.threshold)
     elif args.command == "calculate_kl":
         input_dir_1, output_dir_1 = get_directories(args.run_id_1, args.input_dir_1, args.output_dir_1)
         input_dir_2, output_dir_2 = get_directories(args.run_id_2, args.input_dir_2, args.output_dir_2)
-        calculate_kl(input_dir_1, input_dir_2, output_dir_1)
+        calculate_kl_distance(input_dir_1, input_dir_2, output_dir_1)
     elif args.command == "kl_analysis":
         input_dir, output_dir = get_directories(args.run_id, args.input_dir, args.output_dir)
         kl_analysis(input_dir, args.significance_level)
