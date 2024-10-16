@@ -2,6 +2,8 @@ import argparse
 import os
 import uuid
 from src.external.create_pfm import create_pfm_matrices
+from src.external.calculate_ic import calculate_ic
+from src.external.ic_analysis import ic_plots
 
 def generate_run_id():
     """Generate a new unique run_id."""

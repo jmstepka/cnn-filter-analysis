@@ -155,7 +155,7 @@ def calculate_pfm_matrices(dictionary, dataset, network, class_type, output_dir)
     print(f"Zapisano macierz PFM do pliku: {output_file_path}")
 
 
-def calculate_pfm_matrices(input_dir, output_dir):
+def create_pfm_matrices(input_dir, output_dir):
     """
     Funkcja generująca macierze PFM na podstawie plików z folderów `filters` i `training_data`.
     
@@ -186,26 +186,6 @@ def calculate_pfm_matrices(input_dir, output_dir):
                         # Skany sekwencji i generowanie PFM
                         best_sequences = scan_sequences(training_data_file_path, filters_file_path)
                         best_sequences_n = choose_best_subseq(best_sequences)
-                        generate_pfm_matrices(best_sequences_n, dataset, network_type, class_type, output_dir)
+                        calculate_pfm_matrices(best_sequences_n, dataset, network_type, class_type, output_dir)
 
     print("Proces tworzenia macierzy PFM zakończony.")
-
-
-
-def main():
-    
-    datasets = ["nonpromoter_active", "nonpromoter_inactive", "promoter_active", "promoter_inactive"]
-    networks = ["alt-again-1", "alt2", "custom1", "patient_specific_thresh2_40000"]
-    
-    for dataset in datasets:
-        print(dataset)
-        for network in networks:
-            print(network)
-            scanned_seqs = scan_sequences("../Magisterka/dataset3/{}_10000.fa".format(dataset), "./filters/{}_filter.txt".format(network))
-            #print(scanned_seqs, "\n")
-            best_subseq = choose_best_subseq(scanned_seqs)
-            #print(best_subseq, "\n")
-            create_pfm_matrices(best_subseq, dataset, network)
-
-if __name__ == "__main__":
-    main()
