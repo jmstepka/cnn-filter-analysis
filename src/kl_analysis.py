@@ -14,7 +14,6 @@ def load_all_network_df(directory="output_kl"):
     for file in Path(directory).glob("*.csv"):
         dfs.append(pd.read_csv(file, sep="\t"))
     df = pd.concat(dfs, ignore_index=True)
-    df["network_type"] = df["Network"].str[8:]
     df["KL distance"] = -1 * df["KL distance"]
     return df
 
@@ -42,7 +41,7 @@ def get_enrichment_df(sorted_df, tag_name, shortening_thresh=1.5):
             dist_data.append(r["KL distance"])
         dict_data = {"enrichment": enrichment_data, "KL distance": dist_data}
         df = pd.DataFrame(dict_data)
-        df["network"] = network
+        df["Network"] = network
         dfs.append(df)
     enrichment_df = pd.concat(dfs, axis=0)
     enrichment_df_shortened = pd.concat(
@@ -51,7 +50,7 @@ def get_enrichment_df(sorted_df, tag_name, shortening_thresh=1.5):
     return enrichment_df_shortened
 
 def plot_kl_distributions(df_all, output_dir):
-    g = sns.FacetGrid(df_all, row="Species", col="network_type", height=4, aspect=1.5)
+    g = sns.FacetGrid(df_all, row="Dataset", col="Network", height=4, aspect=1.5)
 
     def overlay_cdf(data, color='k', **kwargs):
         ax2 = plt.gca().twinx()
@@ -72,7 +71,7 @@ def plot_kl_distributions(df_all, output_dir):
     plt.close()
 
 def plot_kl_distributions_with_motif_family(df_all, family, output_dir):
-    g = sns.FacetGrid(df_all, row="Species", col="network_type", hue=family, height=4, aspect=1.5)
+    g = sns.FacetGrid(df_all, row="Dataset", col="Network", hue=family, height=4, aspect=1.5)
     g.map(sns.histplot, 'KL distance')
     thresh = 5.0
     g.fig.subplots_adjust(top=0.94)
@@ -85,7 +84,7 @@ def plot_kl_distributions_with_motif_family(df_all, family, output_dir):
     plt.close()
 
 def plot_enrichment(enrich_df, family, output_dir):
-    sns.lineplot(data=enrich_df, x="KL distance", y="enrichment", hue="network")
+    sns.lineplot(data=enrich_df, x="KL distance", y="enrichment", hue="Network")
     plt.ylabel(f"{family} proportion")
     plt.title(f"{family} proportion in different KL distance thresholds")
 
@@ -95,7 +94,7 @@ def plot_enrichment(enrich_df, family, output_dir):
     plt.close()
 
 def plot_csf_with_kstext(df_all, family, output_dir):
-    g = sns.FacetGrid(df_all, row="Species", col="network_type", hue=family, height=4, aspect=1.5)
+    g = sns.FacetGrid(df_all, row="Dataset", col="Network", hue=family, height=4, aspect=1.5)
 
     def overlay_cdf(data, color='k', **kwargs):
         ax2 = plt.gca()

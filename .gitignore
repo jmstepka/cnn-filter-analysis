@@ -1,1 +1,5 @@
-data/
+data/*
+src/__pycache__
+!data/input_example/
+!data/motifs_families/
+!data/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme

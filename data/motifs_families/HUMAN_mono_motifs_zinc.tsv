@@ -1,0 +1,69 @@
+Model	LOGO	Transcription factor	Model length	Quality	TF family	EntrezGene	UniProt ID
+ANDR_HUMAN.H11MO.0.A		HUMAN:AR	18	A	Steroid hormone receptors (NR3){2.1.1}	367	ANDR_HUMAN
+ANDR_HUMAN.H11MO.1.A		HUMAN:AR	16	A	Steroid hormone receptors (NR3){2.1.1}	367	ANDR_HUMAN
+ANDR_HUMAN.H11MO.2.A		HUMAN:AR	12	A	Steroid hormone receptors (NR3){2.1.1}	367	ANDR_HUMAN
+COT1_HUMAN.H11MO.0.C		HUMAN:NR2F1	17	C	RXR-related receptors (NR2){2.1.3}	7025	COT1_HUMAN
+COT1_HUMAN.H11MO.1.C		HUMAN:NR2F1	13	C	RXR-related receptors (NR2){2.1.3}	7025	COT1_HUMAN
+COT2_HUMAN.H11MO.0.A		HUMAN:NR2F2	13	A	RXR-related receptors (NR2){2.1.3}	7026	COT2_HUMAN
+COT2_HUMAN.H11MO.1.A		HUMAN:NR2F2	17	A	RXR-related receptors (NR2){2.1.3}	7026	COT2_HUMAN
+ERR1_HUMAN.H11MO.0.A		HUMAN:ESRRA	15	A	Steroid hormone receptors (NR3){2.1.1}	2101	ERR1_HUMAN
+ERR2_HUMAN.H11MO.0.A		HUMAN:ESRRB	9	A	Steroid hormone receptors (NR3){2.1.1}	2103	ERR2_HUMAN
+ERR3_HUMAN.H11MO.0.B		HUMAN:ESRRG	9	B	Steroid hormone receptors (NR3){2.1.1}	2104	ERR3_HUMAN
+ESR1_HUMAN.H11MO.0.A		HUMAN:ESR1	15	A	Steroid hormone receptors (NR3){2.1.1}	2099	ESR1_HUMAN
+ESR1_HUMAN.H11MO.1.A		HUMAN:ESR1	10	A	Steroid hormone receptors (NR3){2.1.1}	2099	ESR1_HUMAN
+ESR2_HUMAN.H11MO.0.A		HUMAN:ESR2	15	A	Steroid hormone receptors (NR3){2.1.1}	2100	ESR2_HUMAN
+ESR2_HUMAN.H11MO.1.A		HUMAN:ESR2	7	A	Steroid hormone receptors (NR3){2.1.1}	2100	ESR2_HUMAN
+GCR_HUMAN.H11MO.0.A		HUMAN:NR3C1	15	A	Steroid hormone receptors (NR3){2.1.1}	2908	GCR_HUMAN
+GCR_HUMAN.H11MO.1.A		HUMAN:NR3C1	12	A	Steroid hormone receptors (NR3){2.1.1}	2908	GCR_HUMAN
+HNF4A_HUMAN.H11MO.0.A		HUMAN:HNF4A	14	A	RXR-related receptors (NR2){2.1.3}	3172	HNF4A_HUMAN
+HNF4G_HUMAN.H11MO.0.B		HUMAN:HNF4G	14	B	RXR-related receptors (NR2){2.1.3}	3174	HNF4G_HUMAN
+MCR_HUMAN.H11MO.0.D		HUMAN:NR3C2	17	D	Steroid hormone receptors (NR3){2.1.1}	4306	MCR_HUMAN
+NR0B1_HUMAN.H11MO.0.D		HUMAN:NR0B1	10	D	DAX-related receptors (NR0){2.1.7}	190	NR0B1_HUMAN
+NR1D1_HUMAN.H11MO.0.B		HUMAN:NR1D1	19	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	9572	NR1D1_HUMAN
+NR1D1_HUMAN.H11MO.1.D		HUMAN:NR1D1	14	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	9572	NR1D1_HUMAN
+NR1H2_HUMAN.H11MO.0.D		HUMAN:NR1H2	19	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	7376	NR1H2_HUMAN
+NR1H3_HUMAN.H11MO.0.B		HUMAN:NR1H3	19	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	10062	NR1H3_HUMAN
+NR1H3_HUMAN.H11MO.1.B		HUMAN:NR1H3	10	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	10062	NR1H3_HUMAN
+NR1H4_HUMAN.H11MO.0.B		HUMAN:NR1H4	19	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	9971	NR1H4_HUMAN
+NR1H4_HUMAN.H11MO.1.B		HUMAN:NR1H4	8	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	9971	NR1H4_HUMAN
+NR1I2_HUMAN.H11MO.0.C		HUMAN:NR1I2	19	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	8856	NR1I2_HUMAN
+NR1I2_HUMAN.H11MO.1.D		HUMAN:NR1I2	8	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	8856	NR1I2_HUMAN
+NR1I3_HUMAN.H11MO.0.C		HUMAN:NR1I3	18	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	9970	NR1I3_HUMAN
+NR1I3_HUMAN.H11MO.1.D		HUMAN:NR1I3	8	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	9970	NR1I3_HUMAN
+NR2C1_HUMAN.H11MO.0.C		HUMAN:NR2C1	13	C	RXR-related receptors (NR2){2.1.3}	7181	NR2C1_HUMAN
+NR2C2_HUMAN.H11MO.0.B		HUMAN:NR2C2	12	B	RXR-related receptors (NR2){2.1.3}	7182	NR2C2_HUMAN
+NR2E1_HUMAN.H11MO.0.D		HUMAN:NR2E1	17	D	RXR-related receptors (NR2){2.1.3}	7101	NR2E1_HUMAN
+NR2E3_HUMAN.H11MO.0.C		HUMAN:NR2E3	14	C	RXR-related receptors (NR2){2.1.3}	10002	NR2E3_HUMAN
+NR2F6_HUMAN.H11MO.0.D		HUMAN:NR2F6	18	D	RXR-related receptors (NR2){2.1.3}	2063	NR2F6_HUMAN
+NR4A1_HUMAN.H11MO.0.A		HUMAN:NR4A1	9	A	NGFI-B-related receptors (NR4){2.1.4}	3164	NR4A1_HUMAN
+NR4A2_HUMAN.H11MO.0.C		HUMAN:NR4A2	9	C	NGFI-B-related receptors (NR4){2.1.4}	4929	NR4A2_HUMAN
+NR4A3_HUMAN.H11MO.0.D		HUMAN:NR4A3	10	D	NGFI-B-related receptors (NR4){2.1.4}	8013	NR4A3_HUMAN
+NR5A2_HUMAN.H11MO.0.B		HUMAN:NR5A2	11	B	FTZ-F1-related receptors (NR5){2.1.5}	2494	NR5A2_HUMAN
+NR6A1_HUMAN.H11MO.0.B		HUMAN:NR6A1	13	B	GCNF-related receptors (NR6){2.1.6}	2649	NR6A1_HUMAN
+PPARA_HUMAN.H11MO.0.B		HUMAN:PPARA	17	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	5465	PPARA_HUMAN
+PPARA_HUMAN.H11MO.1.B		HUMAN:PPARA	9	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	5465	PPARA_HUMAN
+PPARD_HUMAN.H11MO.0.D		HUMAN:PPARD	14	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	5467	PPARD_HUMAN
+PPARG_HUMAN.H11MO.0.A		HUMAN:PPARG	17	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	5468	PPARG_HUMAN
+PPARG_HUMAN.H11MO.1.A		HUMAN:PPARG	9	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	5468	PPARG_HUMAN
+PRGR_HUMAN.H11MO.0.A		HUMAN:PGR	16	A	Steroid hormone receptors (NR3){2.1.1}	5241	PRGR_HUMAN
+PRGR_HUMAN.H11MO.1.A		HUMAN:PGR	9	A	Steroid hormone receptors (NR3){2.1.1}	5241	PRGR_HUMAN
+RARA_HUMAN.H11MO.0.A		HUMAN:RARA	20	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	5914	RARA_HUMAN
+RARA_HUMAN.H11MO.1.A		HUMAN:RARA	10	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	5914	RARA_HUMAN
+RARA_HUMAN.H11MO.2.A		HUMAN:RARA	17	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	5914	RARA_HUMAN
+RARB_HUMAN.H11MO.0.D		HUMAN:RARB	11	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	5915	RARB_HUMAN
+RARG_HUMAN.H11MO.0.B		HUMAN:RARG	18	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	5916	RARG_HUMAN
+RARG_HUMAN.H11MO.1.B		HUMAN:RARG	8	B	Thyroid hormone receptor-related factors (NR1){2.1.2}	5916	RARG_HUMAN
+RARG_HUMAN.H11MO.2.D		HUMAN:RARG	20	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	5916	RARG_HUMAN
+RORA_HUMAN.H11MO.0.C		HUMAN:RORA	13	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	6095	RORA_HUMAN
+RORG_HUMAN.H11MO.0.C		HUMAN:RORC	12	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	6097	RORG_HUMAN
+RXRA_HUMAN.H11MO.0.A		HUMAN:RXRA	20	A	RXR-related receptors (NR2){2.1.3}	6256	RXRA_HUMAN
+RXRA_HUMAN.H11MO.1.A		HUMAN:RXRA	10	A	RXR-related receptors (NR2){2.1.3}	6256	RXRA_HUMAN
+RXRB_HUMAN.H11MO.0.C		HUMAN:RXRB	10	C	RXR-related receptors (NR2){2.1.3}	6257	RXRB_HUMAN
+RXRG_HUMAN.H11MO.0.B		HUMAN:RXRG	13	B	RXR-related receptors (NR2){2.1.3}	6258	RXRG_HUMAN
+STF1_HUMAN.H11MO.0.B		HUMAN:NR5A1	11	B	FTZ-F1-related receptors (NR5){2.1.5}	2516	STF1_HUMAN
+THA_HUMAN.H11MO.0.C		HUMAN:THRA	17	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	7067	THA_HUMAN
+THA_HUMAN.H11MO.1.D		HUMAN:THRA	10	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	7067	THA_HUMAN
+THB_HUMAN.H11MO.0.C		HUMAN:THRB	17	C	Thyroid hormone receptor-related factors (NR1){2.1.2}	7068	THB_HUMAN
+THB_HUMAN.H11MO.1.D		HUMAN:THRB	10	D	Thyroid hormone receptor-related factors (NR1){2.1.2}	7068	THB_HUMAN
+VDR_HUMAN.H11MO.0.A		HUMAN:VDR	16	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	7421	VDR_HUMAN
+VDR_HUMAN.H11MO.1.A		HUMAN:VDR	9	A	Thyroid hormone receptor-related factors (NR1){2.1.2}	7421	VDR_HUMAN

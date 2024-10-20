@@ -42,22 +42,29 @@ def one_hot_encode(seq):
     return np.eye(4)[seq2]
 
 
-def scan_sequences(sequences_file, filters_file):
+def calculate_filter_mean(filter_matrix):
+    """
+    Funkcja obliczająca średnią wartość składowych filtra.
+    
+    :param filter_matrix: Macierz filtra
+    :return: Średnia wartość elementów macierzy filtra
+    """
+    return np.mean(filter_matrix)
+
+
+def scan_sequences(sequences_file, filters_file, threshold=1e-5):
     """
     Funkcja skanująca filtrem sekwencje. Zwraca słownik, w którym kluczem
     jest nazwa filtra, a wartością lista najlepszych podsekwencji dla każdej sekwencji.
     
     :param sequences_file: Plik z sekwencjami ze zbioru treningowego
     :param filters_file: Plik z wartościami filtra
+    :param threshold: Próg średniej wartości filtra, powyżej którego filtr jest brany pod uwagę
     :return: Słownik z najlepszymi podsekwencjami dla każdego filtra
     """
     
     best_sequences = {}
     sequences = read_sequences(sequences_file)
-    
-    network_name = os.path.basename(filters_file).replace("_filter.txt", "")
-    df_above = pd.read_csv("./statistics/{}_filters_above_tresh.csv".format(network_name))
-    filters_above_tresh = df_above["Filter"].tolist()
     
     nucleotides = {0: "A", 1: "C", 2: "G", 3: "T"}
 
@@ -68,13 +75,16 @@ def scan_sequences(sequences_file, filters_file):
             lines = file.readlines()
             f = 0
             for i in range(1, len(lines)-1, 5):
-                filter = np.loadtxt(lines[i:i+4])
-                best = float('-inf')
-                if f"filter_{f}" in filters_above_tresh:
+                filter_matrix = np.loadtxt(lines[i:i+4])
+                filter_mean = calculate_filter_mean(filter_matrix)
+                
+                # Filtruj filtry na podstawie średniej wartości
+                if filter_mean > threshold:
+                    best = float('-inf')
                     for j in range(np.shape(matrix)[1]):
-                        if np.shape(matrix[:, j:j+np.shape(filter)[1]])[1] == np.shape(filter)[1]:
-                            submatrix = matrix[:, j:j+np.shape(filter)[1]]
-                            convolution = filter * submatrix
+                        if np.shape(matrix[:, j:j+np.shape(filter_matrix)[1]])[1] == np.shape(filter_matrix)[1]:
+                            submatrix = matrix[:, j:j+np.shape(filter_matrix)[1]]
+                            convolution = filter_matrix * submatrix
                             total = np.sum(convolution)
                             if total > best:
                                 best = total
@@ -136,7 +146,7 @@ def calculate_pfm_matrices(dictionary, dataset, network, class_type, output_dir)
         fileout.write("MEME version 4\n\nALPHABET= ACGT\n\nstrands: + -\n\nBackground letter frequencies\nA 0.25 C 0.25 G 0.25 T 0.25\n\n")
         # Dla każdego filtra
         for filter_name in dictionary:
-            fileout.write("MOTIF {}\nletter-probability matrix: alength= 4 w= 19\n".format(str(filter_name)))
+            fileout.write(f"MOTIF {str(filter_name)}\nletter-probability matrix: alength= 4 w= 19\n")
             instances = []
             # Tworzenie instancji Seq dla każdej podsekwencji 
             for seq in dictionary[filter_name]:
@@ -155,12 +165,13 @@ def calculate_pfm_matrices(dictionary, dataset, network, class_type, output_dir)
     print(f"Zapisano macierz PFM do pliku: {output_file_path}")
 
 
-def create_pfm_matrices(input_dir, output_dir):
+def create_pfm_matrices(input_dir, output_dir, threshold=1e-5):
     """
     Funkcja generująca macierze PFM na podstawie plików z folderów `filters` i `training_data`.
     
     :param input_dir: Lokalizacja wejściowa, w której znajdują się foldery `filters` i `training_data`.
     :param output_dir: Lokalizacja wyjściowa, gdzie mają być zapisane macierze PFM.
+    :param threshold: Próg średniej wartości filtra, powyżej którego filtr jest brany pod uwagę.
     """
     
     filters_dir = os.path.join(input_dir, "filters")
@@ -184,7 +195,7 @@ def create_pfm_matrices(input_dir, output_dir):
                         training_data_file_path = os.path.join(training_data_dir, training_data_file)
                         
                         # Skany sekwencji i generowanie PFM
-                        best_sequences = scan_sequences(training_data_file_path, filters_file_path)
+                        best_sequences = scan_sequences(training_data_file_path, filters_file_path, threshold=threshold)
                         best_sequences_n = choose_best_subseq(best_sequences)
                         calculate_pfm_matrices(best_sequences_n, dataset, network_type, class_type, output_dir)
 

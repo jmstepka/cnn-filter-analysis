@@ -11,7 +11,7 @@ def load_ic_data(input_folder):
 
     # Iterowanie przez pliki CSV i tworzenie DataFrame'ów
     for csv_file in ic_path.glob("*.csv"):
-        network, dataset = csv_file.stem.split("_")
+        network, dataset = csv_file.stem.split("_")[:2]
         if network not in df_dict:
             df_dict[network] = {}
         df_dict[network][dataset] = pd.read_csv(csv_file)
