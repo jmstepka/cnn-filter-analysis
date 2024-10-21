@@ -19,8 +19,7 @@ This tool provides a command-line interface (CLI) for performing various operati
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/cnn-filter-analysis.git
-   ```
+   git clone https://github.com/jmstepka/cnn-filter-analysis
 
 2. Install the required libraries, python version on which the package was developed is 3.10.14:
    ```bash
