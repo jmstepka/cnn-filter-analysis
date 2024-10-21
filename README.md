@@ -22,7 +22,7 @@ This tool provides a command-line interface (CLI) for performing various operati
    git clone https://github.com/your-repo/cnn-filter-analysis.git
    ```
 
-2. Install the required libraries:
+2. Install the required libraries, python version on which the package was developed is 3.10.14:
    ```bash
    pip install -r requirements.txt
    ```
