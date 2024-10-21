@@ -19,7 +19,7 @@ def create_directories_for_run(run_id, base_dir="./data"):
     run_dir = os.path.join(base_dir, run_id)
     os.makedirs(run_dir, exist_ok=True)
     
-    # Tworzenie podkatalogów w katalogu run_dir
+    # Creating subdirectories in the run_dir
     pfm_dir = os.path.join(run_dir, "pfm_matrices")
     ic_dir = os.path.join(run_dir, "calculated_ic")
     kl_dir = os.path.join(run_dir, "kl_distance")

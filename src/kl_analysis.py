@@ -7,9 +7,16 @@ from pathlib import Path
 from scipy.stats import kstest
 import logomaker as lm
 
-# Functions from your previous step
-
 def load_all_network_df(directory="output_kl"):
+    """
+    Load all network data from CSV files and concatenate into a single DataFrame.
+
+    Args:
+        directory (str): Directory containing the KL distance CSV files.
+
+    Returns:
+        pd.DataFrame: DataFrame containing KL distances for all networks.
+    """
     dfs = []
     for file in Path(directory).glob("*.csv"):
         dfs.append(pd.read_csv(file, sep="\t"))
@@ -18,6 +25,17 @@ def load_all_network_df(directory="output_kl"):
     return df
 
 def tag_family(df, path, name):
+    """
+    Tag motifs belonging to a specific family based on a file of family TFs.
+
+    Args:
+        df (pd.DataFrame): DataFrame containing KL distance data.
+        path (str): Path to the file containing family TFs.
+        name (str): Name of the family to tag.
+
+    Returns:
+        pd.DataFrame: DataFrame with an additional tag column indicating family membership.
+    """
     family_tfs = pd.read_csv(f"{path}", sep="\t")
     family_tfs[f"{name}_tag"] = 1
     family_df = family_tfs[["Model", f"{name}_tag"]]
@@ -26,6 +44,17 @@ def tag_family(df, path, name):
     return tagged
 
 def get_enrichment_df(sorted_df, tag_name, shortening_thresh=1.5):
+    """
+    Calculate enrichment data for motifs in a family at different KL distance thresholds.
+
+    Args:
+        sorted_df (pd.DataFrame): Sorted DataFrame by KL distance.
+        tag_name (str): Column name indicating family membership.
+        shortening_thresh (float): KL distance threshold for reducing data density.
+
+    Returns:
+        pd.DataFrame: Enrichment data for the family across KL distances.
+    """
     dfs = []
     for network in sorted_df["Network"].unique():
         enrichment_data = []
@@ -50,6 +79,13 @@ def get_enrichment_df(sorted_df, tag_name, shortening_thresh=1.5):
     return enrichment_df_shortened
 
 def plot_kl_distributions(df_all, output_dir):
+    """
+    Plot histograms and CDF plots for KL distances across networks and datasets.
+
+    Args:
+        df_all (pd.DataFrame): DataFrame containing KL distance data.
+        output_dir (str): Directory to save the output plot.
+    """
     g = sns.FacetGrid(df_all, row="Dataset", col="Network", height=4, aspect=1.5)
 
     def overlay_cdf(data, color='k', **kwargs):
@@ -71,6 +107,14 @@ def plot_kl_distributions(df_all, output_dir):
     plt.close()
 
 def plot_kl_distributions_with_motif_family(df_all, family, output_dir):
+    """
+    Plot KL distance distributions for motifs by family membership.
+
+    Args:
+        df_all (pd.DataFrame): DataFrame with KL distance and family tags.
+        family (str): Family column name to differentiate in the plot.
+        output_dir (str): Directory to save the output plot.
+    """
     g = sns.FacetGrid(df_all, row="Dataset", col="Network", hue=family, height=4, aspect=1.5)
     g.map(sns.histplot, 'KL distance')
     thresh = 5.0
@@ -84,6 +128,14 @@ def plot_kl_distributions_with_motif_family(df_all, family, output_dir):
     plt.close()
 
 def plot_enrichment(enrich_df, family, output_dir):
+    """
+    Plot family enrichment at different KL distance thresholds.
+
+    Args:
+        enrich_df (pd.DataFrame): Enrichment data for the family.
+        family (str): Name of the family.
+        output_dir (str): Directory to save the output plot.
+    """
     sns.lineplot(data=enrich_df, x="KL distance", y="enrichment", hue="Network")
     plt.ylabel(f"{family} proportion")
     plt.title(f"{family} proportion in different KL distance thresholds")
@@ -94,6 +146,14 @@ def plot_enrichment(enrich_df, family, output_dir):
     plt.close()
 
 def plot_csf_with_kstext(df_all, family, output_dir):
+    """
+    Plot CDF and perform the Kolmogorov-Smirnov test for family vs non-family motifs.
+
+    Args:
+        df_all (pd.DataFrame): DataFrame with KL distance and family tags.
+        family (str): Family column name for testing.
+        output_dir (str): Directory to save the output plot.
+    """
     g = sns.FacetGrid(df_all, row="Dataset", col="Network", hue=family, height=4, aspect=1.5)
 
     def overlay_cdf(data, color='k', **kwargs):
@@ -123,30 +183,31 @@ def plot_csf_with_kstext(df_all, family, output_dir):
     plt.close()
 
 def perform_kl_analysis(input_dir, family_files, family_names, output_dir):
-    # Ensure output directory exists
+    """
+    Perform KL analysis, including plotting and family enrichment analysis.
+
+    Args:
+        input_dir (str): Directory containing KL distance data.
+        family_files (list): List of paths to family motif files.
+        family_names (list): List of family names.
+        output_dir (str): Directory to save all output plots.
+    """
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Load KL distances
     df_all = load_all_network_df(directory=input_dir)
 
-    # Iterate over the list of families and their corresponding family files
     for family_file, family_name in zip(family_files, family_names):
         print(f"Processing family: {family_name}")
 
-        # Tag motifs belonging to a specific family
         df_all_tagged = tag_family(df_all, family_file, family_name)
 
-        # Plot overall KL distribution
         plot_kl_distributions(df_all_tagged, output_dir)
 
-        # Plot KL distribution for the family vs non-family
         plot_kl_distributions_with_motif_family(df_all_tagged, family=f"{family_name}_tag", output_dir=output_dir)
 
-        # Get enrichment data and plot
         sorted_df = df_all_tagged.sort_values(by=["KL distance"])
         enrichment_df = get_enrichment_df(sorted_df, f"{family_name}_tag")
         plot_enrichment(enrichment_df, family=family_name, output_dir=output_dir)
 
-        # Plot CDF with KS test results
         plot_csf_with_kstext(df_all_tagged, family=f"{family_name}_tag", output_dir=output_dir)

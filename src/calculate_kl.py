@@ -4,15 +4,31 @@ import os
 
 def add_pseudocount(freq, sites, pseudocount=0.1):
     """
-    Add pseudocount assuming uniform background.
+    Adds pseudocount to frequency assuming uniform background.
+
+    Args:
+        freq (float): Frequency value to adjust.
+        sites (int): Number of binding sites.
+        pseudocount (float): Pseudocount to add for adjustment.
+
+    Returns:
+        float: Adjusted frequency with pseudocount.
     """
     return ((freq * sites) + (pseudocount * 0.25)) / (sites + pseudocount)
 
 def calculate_kl(query_freq, target_freq, epsilon=1e-10):
     """
-    Calculate Kullback-Leibler divergence between two positions, avoiding log of zero.
+    Calculate the Kullback-Leibler (KL) divergence between two frequencies.
+
+    Args:
+        query_freq (float): Query frequency value.
+        target_freq (float): Target frequency value.
+        epsilon (float): Small value to avoid log(0).
+
+    Returns:
+        float: Average KL divergence between the two frequencies.
     """
-    query_freq = max(query_freq, epsilon)  # Zabezpieczenie przed log(0)
+    query_freq = max(query_freq, epsilon)  # Prevent log(0)
     target_freq = max(target_freq, epsilon)
     
     avg_kull = ((query_freq * np.log10(query_freq / target_freq)) + 
@@ -21,7 +37,14 @@ def calculate_kl(query_freq, target_freq, epsilon=1e-10):
 
 def filter_motifs_by_ic(ic_csv_file, ic_threshold):
     """
-    Filter motifs based on Information Content (IC) threshold from a given CSV file.
+    Filters motifs based on the Information Content (IC) threshold.
+
+    Args:
+        ic_csv_file (str): Path to the IC CSV file.
+        ic_threshold (float): IC threshold value.
+
+    Returns:
+        list: List of motifs that meet the IC threshold.
     """
     ic_df = pd.read_csv(ic_csv_file)
     filtered_motifs = ic_df[ic_df["IC"] >= ic_threshold]["Filter"].tolist()
@@ -29,7 +52,16 @@ def filter_motifs_by_ic(ic_csv_file, ic_threshold):
 
 def load_pfm_matrices(pfm_folder, dataset, network, class_type):
     """
-    Load PFM matrices for the given dataset, network, and class_type.
+    Loads PFM matrices for a given dataset, network, and class type.
+
+    Args:
+        pfm_folder (str): Folder path containing the PFM matrices.
+        dataset (str): Dataset name.
+        network (str): Network name.
+        class_type (str): Class type.
+
+    Returns:
+        dict: Dictionary of PFM matrices with motif names as keys.
     """
     pfm_file_path = os.path.join(pfm_folder, f"{dataset}_{network}_{class_type}_pfm.txt")
     pfm_matrices = {}
@@ -45,7 +77,13 @@ def load_pfm_matrices(pfm_folder, dataset, network, class_type):
 
 def create_ppm_matrix(pfm_matrix):
     """
-    Create PPM matrix from PFM matrix.
+    Converts a PFM matrix into a PPM matrix.
+
+    Args:
+        pfm_matrix (np.array): Position Frequency Matrix (PFM).
+
+    Returns:
+        np.array: Position Probability Matrix (PPM).
     """
     ppm_matrix = np.empty([pfm_matrix.shape[0], pfm_matrix.shape[1]])
     for (x, y), value in np.ndenumerate(pfm_matrix):
@@ -55,32 +93,45 @@ def create_ppm_matrix(pfm_matrix):
 
 def extract_kmer_from_ppm(ppm_matrix, start, end):
     """
-    Extract the kmer (submatrix) from the PPM matrix between the given start and end positions.
+    Extracts a k-mer (submatrix) from the PPM matrix.
+
+    Args:
+        ppm_matrix (np.array): Position Probability Matrix (PPM).
+        start (int): Start position of the k-mer.
+        end (int): End position of the k-mer.
+
+    Returns:
+        np.array: Submatrix representing the k-mer.
     """
     return ppm_matrix[start:end]
 
 def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_models_path, ic_threshold=6.5):
     """
-    Calculate KL divergence for filtered motifs based on IC threshold from CSV files.
+    Calculates KL divergence for motifs filtered by IC threshold and saves the results.
+
+    Args:
+        ic_csv_folder (str): Folder containing IC CSV files.
+        pfm_folder (str): Folder containing PFM matrices.
+        output_folder (str): Folder to save the KL divergence results.
+        hocomoco_models_path (str): Path to HOCOMOCO models in MEME format.
+        ic_threshold (float): IC threshold for motif filtering.
+
+    Returns:
+        None: Saves KL divergence results to CSV files in the output folder.
     """
     alphabet_size = 4
-    pseudocount = 0.1
 
-    # Iterate through all CSV files in the IC folder
     for ic_csv_file in os.listdir(ic_csv_folder):
         if ic_csv_file.endswith(".csv"):
-            # Extract dataset, network, and class from the filename
             filename_parts = ic_csv_file.replace(".csv", "").split("_")
             dataset, network, class_type = filename_parts
 
-            # Define paths and print progress
             print(f"Processing {dataset}, {network}, {class_type}")
             ic_csv_file_path = os.path.join(ic_csv_folder, ic_csv_file)
 
             # Filter motifs by IC threshold using the CSV file
             filter_names = filter_motifs_by_ic(ic_csv_file_path, ic_threshold)
 
-            # Load corresponding PFM matrices for the dataset, network, and class
             pfm_matrices = load_pfm_matrices(pfm_folder, dataset, network, class_type)
 
             results_dict = {
@@ -90,7 +141,6 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
 
             # Iterate over each filtered motif name from the CSV file
             for filter_name in filter_names:
-                # Extract information from the filter name (format: {dataset}_{network}_{class_type}_{filter_num}_{start}_{end})
                 filter_parts = filter_name.split("_")
                 filter_num = filter_parts[4]
                 start_pos = int(filter_parts[5])
@@ -99,17 +149,13 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
                 # Retrieve the corresponding PFM matrix for the filter
                 pfm_matrix = pfm_matrices.get(f"filter_{filter_num}")
                 if pfm_matrix is None:
-                    continue  # Skip if the matrix for this filter is not found
+                    continue 
 
                 # Convert PFM to PPM matrix
                 ppm_matrix = create_ppm_matrix(pfm_matrix)
 
                 # Extract the kmer from the PPM matrix
                 kmer_ppm = extract_kmer_from_ppm(ppm_matrix, start_pos, end_pos)
-
-                #print(f"Processing {filter_name}, start_pos: {start_pos}, end_pos: {end_pos}")
-                #print(f"PFM Matrix for filter {filter_num}: {pfm_matrix}")
-                #print(f"Kmer PPM Matrix: {kmer_ppm}")
 
                 length = kmer_ppm.shape[0]  # Length of the kmer
 
@@ -126,8 +172,6 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
 
                         distances_dict = {}
 
-                        #print(f"HOCOMOCO motif name: {tname}, Motif matrix: {tmatrix}")
-
                         # Sliding window on the target motif
                         for iq in range(0, length):
                             for it in range(iq, iq + tlength - length + 1):
@@ -135,7 +179,7 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
                                 distance = 0
                                 rc_distance = 0
 
-                                for ia in range(0, alphabet_size):                                                
+                                for ia in range(0, alphabet_size):                                                            
                                     q_freq = kmer_ppm[iq, ia]
                                     t_freq = tmatrix[it, ia]
                                     rc_t_freq = rc_tmatrix[it, ia]
@@ -179,7 +223,7 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
                             results_dict["Offset"].append(offset)
                             results_dict["KL distance"].append(lowest_scores_dict[offset])
 
-            # Save results to CSV file
+
             if not os.path.exists(output_folder):
                 os.makedirs(output_folder)
             output_file = os.path.join(output_folder, f"{dataset}_{network}_{class_type}_KLdist.csv")
