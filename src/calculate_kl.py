@@ -167,6 +167,8 @@ def calculate_kl_distance(ic_csv_folder, pfm_folder, output_folder, hocomoco_mod
                         tmatrix = np.loadtxt(tmotif.split("\nURL")[0].split("\n")[2:])
                         nsites = int(tmotif.split("\n")[1].split("nsites= ")[-1])
                         tlength = tmatrix.shape[0]
+                        if tlength < length:
+                            continue
 
                         rc_tmatrix = np.flip(tmatrix, axis=0)  # Reverse complement of the target matrix
 
