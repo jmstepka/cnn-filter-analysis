@@ -170,13 +170,6 @@ python cli.py kl_analysis \
 - **`--test_level`**: (Optional) Level to test when `--test_all` is used (`superclass` or `class`). Default is `superclass`.
 - **`--correction_method`**: (Optional) Method for multiple testing correction (`bonferroni`, `fdr_bh`, etc.). Default is `fdr_bh`.
 
-#### Notes:
-
-- **Testing Options:**
-  - You must specify one of the following:
-    - `-c` / `--class_descriptors` to test specific class descriptors.
-    - `--test_all` to test all superclasses or classes.
-    - `-f` / `--family_files` to specify motif family files (requires `-n` / `--family_names`).
 
 ## Examples
 

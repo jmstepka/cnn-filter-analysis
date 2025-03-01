@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from scipy.stats import kstest
 
-from data_processing import get_matrix, get_tf_matrix
+from external.data_processing import get_matrix, get_tf_matrix
 
 from math import ceil
 
